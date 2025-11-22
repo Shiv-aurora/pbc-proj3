@@ -1,0 +1,49 @@
+.habit-chart {
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    padding: 0.5rem 0;
+
+    .chart-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .completion-rate {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-brown);
+      background: var(--color-beige);
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+  }
+
+  .chart-container {
+    position: relative;
+    height: 180px;
+    width: 100%;
+
+    canvas {
+      max-height: 180px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .habit-chart {
+    .chart-container {
+      height: 150px;
+
+      canvas {
+        max-height: 150px;
+      }
+    }
+  }
+}
+

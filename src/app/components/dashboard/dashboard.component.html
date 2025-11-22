@@ -1,0 +1,22 @@
+<div class="dashboard-container">
+  <!-- Header Section -->
+  <header class="dashboard-header">
+    <h1>Wellness Dashboard</h1>
+    <p class="current-date">{{ currentDate }}</p>
+  </header>
+
+  <!-- Motivational Quote Section -->
+  <section class="quote-section">
+    <div class="quote-card">
+      <div class="quote-icon">💪</div>
+      <blockquote class="quote-text">"{{ motivationalQuote }}"</blockquote>
+      <p class="quote-author">— {{ quoteAuthor }}</p>
+    </div>
+  </section>
+
+  <!-- Habit Tracker Section -->
+  <section class="habit-section">
+    <h2>Daily Habits</h2>
+    <app-habit-tracker></app-habit-tracker>
+  </section>
+</div>

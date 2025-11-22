@@ -1,0 +1,86 @@
+<div class="habit-tracker">
+  <!-- Add Habit Button -->
+  <div class="add-habit-header">
+    <button class="btn-add-habit" (click)="toggleAddForm()">
+      {{ showAddForm ? '✕ Cancel' : '+ Add New Habit' }}
+    </button>
+  </div>
+
+  <!-- Add Habit Form -->
+  <div class="add-habit-form" *ngIf="showAddForm">
+    <form [formGroup]="habitForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Habit Name *</label>
+        <input 
+          type="text" 
+          id="name" 
+          formControlName="name" 
+          placeholder="e.g., Drink 8 glasses of water"
+          class="form-control"
+          [class.error]="formName?.invalid && formName?.touched"
+        />
+        <div class="error-message" *ngIf="formName?.invalid && formName?.touched">
+          <span *ngIf="formName?.errors?.['required']">Habit name is required</span>
+          <span *ngIf="formName?.errors?.['minlength']">Habit name must be at least 2 characters</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description (Optional)</label>
+        <input 
+          type="text" 
+          id="description" 
+          formControlName="description" 
+          placeholder="Add a description..."
+          class="form-control"
+        />
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="habitForm.invalid">
+        Add Habit
+      </button>
+    </form>
+  </div>
+
+  <!-- Habits List -->
+  <div class="habits-list" *ngIf="habits.length > 0">
+    <div class="habit-card" *ngFor="let habit of habits">
+      <div class="habit-info">
+        <div class="habit-checkbox-container">
+          <input 
+            type="checkbox" 
+            [id]="'habit-' + habit.id"
+            [checked]="isCompletedToday(habit.id)"
+            (change)="toggleHabit(habit.id)"
+            class="habit-checkbox"
+          />
+          <label [for]="'habit-' + habit.id" class="habit-label">
+            <span class="habit-name" [class.completed]="isCompletedToday(habit.id)">
+              {{ habit.name }}
+            </span>
+            <span class="habit-description" *ngIf="habit.description">
+              {{ habit.description }}
+            </span>
+          </label>
+        </div>
+        <button class="btn-delete" (click)="deleteHabit(habit.id)" title="Delete habit">
+          🗑️
+        </button>
+      </div>
+      
+      <!-- 7-Day Chart -->
+      <div class="habit-chart-container">
+        <app-habit-chart [habitId]="habit.id"></app-habit-chart>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="habits.length === 0 && !showAddForm">
+    <div class="empty-icon">📋</div>
+    <p>No habits yet. Start building healthy habits today!</p>
+    <button class="btn-primary" (click)="toggleAddForm()">
+      Add Your First Habit
+    </button>
+  </div>
+</div>
