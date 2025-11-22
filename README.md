@@ -1,6 +1,5 @@
 # Wellness App
 
-A clean habit tracker with warm design and 7-day progress charts.
 
 ## 🚀 Getting Started
 
@@ -61,19 +60,4 @@ npm run build      # Build for production
 ng test           # Run tests
 ```
 
-## 👥 Team
 
-- Ava Turnbull
-- Ambyr Baker
-- Shiv
-
-## 📝 Class Project
-
-CS Web Development - Phase 1
-
-Demonstrates:
-- Angular components
-- Routing
-- Services
-- Forms
-- Data visualization
