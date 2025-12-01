@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HabitTrackerComponent } from '../habit-tracker/habit-tracker.component';
+import { CaloriesChartComponent } from '../calories-chart/calories-chart.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, HabitTrackerComponent],
+  imports: [CommonModule, HabitTrackerComponent, CaloriesChartComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
