@@ -1,0 +1,20 @@
+.mood-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    min-height: calc(100vh - 80px);
+  }
+  
+  .mood-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.0rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      color: var(--color-brown);
+      letter-spacing: -1px;
+    }
+  }

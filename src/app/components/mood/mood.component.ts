@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-mood',
+  selector: 'app-calories-chart',
   standalone: true,
   imports: [],
   templateUrl: './mood.component.html',
