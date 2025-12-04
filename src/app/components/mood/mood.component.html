@@ -1,5 +1,19 @@
 <div class="mood-container">
     <header class="mood-header">
         <h1>Mood Tracker</h1>
-    </header>
+        <p *ngIf="loading">Loading mood data…</p>
+
+        <div *ngIf="!loading && moodData.length">
+          <h3>Recent Daylio Entries</h3>
+          <ul>
+            <li *ngFor="let entry of moodData | slice:0:10">
+              <strong>{{ entry.date }}</strong> — {{ entry.mood }}
+            </li>
+          </ul>
+        </div>
+        
+        <p *ngIf="!loading && !moodData.length">
+          No mood entries found.
+        </p>
+    </header>        
 </div>
