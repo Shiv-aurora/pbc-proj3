@@ -1,0 +1,155 @@
+.food{
+  background:var(--color-white);
+  border: 2px solid var(--color-beige);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.add-food-header {
+  margin-bottom: 2rem;
+
+  .btn-add-habit {
+    background: var(--color-brown);
+    color: var(--color-white);
+    border: 2px solid var(--color-brown);
+    padding: 0.8rem 1.75rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+
+    &:hover {
+      background: var(--color-brown-light);
+      border-color: var(--color-brown-light);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+.add-habit-form {
+  background: var(--color-off-white);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 2px solid var(--color-beige);
+
+  .form-group {
+    margin-bottom: 1.25rem;
+
+    label {
+      display: block;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.85rem;
+      border: 2px solid var(--color-beige);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: var(--color-white);
+      color: var(--color-text-primary);
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.3s, box-shadow 0.3s;
+
+      &:focus {
+        outline: none;
+        border-color: var(--color-brown-light);
+        box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+      }
+
+      &.error {
+        border-color: #c75b5b;
+      }
+    }
+
+    .error-message {
+      color: #c75b5b;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+      font-family: 'Inter', sans-serif;
+    }
+  }
+
+  .btn-submit {
+    background: var(--color-brown);
+    color: var(--color-white);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+
+    &:hover:not(:disabled) {
+      background: var(--color-brown-light);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: var(--color-tan);
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--color-text-secondary);
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.25rem;
+    opacity: 0.6;
+  }
+
+  p {
+    font-size: 1.15rem;
+    margin-bottom: 2rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--color-text-secondary);
+  }
+
+  .btn-primary {
+    background: var(--color-brown);
+    color: var(--color-white);
+    border: none;
+    padding: 0.85rem 2.25rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+
+    &:hover {
+      background: var(--color-brown-light);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .habit-tracker {
+    padding: 1.5rem;
+  }
+
+  .add-habit-form {
+    padding: 1.5rem;
+  }
+}

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { CaloriesComponent } from './components/calories/calories.component';
+import { FoodComponent } from './components/food/food.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -8,6 +8,6 @@ export const routes: Routes = [
   // Future routes can be added here:
   // { path: 'habits', component: HabitsComponent },
   // { path: 'mood', component: MoodComponent },
-  { path: 'calories', component: CaloriesComponent },
+  { path: 'food', component: FoodComponent },
   { path: '**', redirectTo: '/dashboard' }
 ];
