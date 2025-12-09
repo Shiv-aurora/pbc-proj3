@@ -65,7 +65,18 @@
 }
 
 .habit-section {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+  h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--color-brown);
+    font-size: 2.25rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+  }
+}
+
+.food-chart-section{
+  margin-top:2rem;
   h2 {
     font-family: 'Playfair Display', serif;
     color: var(--color-brown);
@@ -94,6 +105,10 @@
 
   .habit-section h2 {
     font-size: 1.8rem;
+  }
+
+  .food-chart-section h2 {
+    font-size:1.8rem;
   }
 }
 

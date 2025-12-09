@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FoodChart } from '../food-chart/food-chart';
 import { HabitTrackerComponent } from '../habit-tracker/habit-tracker.component';
-import { FoodComponent } from '../food/food.component';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [HabitTrackerComponent, FoodComponent,FoodChart],
+    imports: [HabitTrackerComponent],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss'
 })

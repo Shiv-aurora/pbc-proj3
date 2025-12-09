@@ -19,81 +19,91 @@
           <div class="form-group">
             <label for="name">Food</label>
             <input
-              type="name"
+              type="text"
               id="name"
               formControlName="name"
               placeholder="e.g., Apples"
               class="form-control"
               [class.error]="formName?.invalid && formName?.touched"
-              />
-              <!--Error Message-->
-              @if (formName?.invalid && formName?.touched) {
-                <div class="error-message">
-                  @if (formName?.errors?.['required']) {
-                    <span>Food name is required</span>
-                  }
-                  @if (formName?.errors?.['minlength']) {
-                    <span>Food name must be at least 2 characters</span>
-                  }
-                </div>
-              }
-            </div>
-            <!--Calories Form Group-->
-            <div class="form-group">
-              <label for="calories">Number of Calories</label>
-              <input
-                type="number"
-                id="calories"
-                formControlName="calories"
-                placeholder="e.g., 95"
-                class="form-control"
-                />
-                <!--Error Message-->
-                @if (formCalories?.invalid && formCalories?.touched) {
-                  <div class="error-message">
-                    @if (formCalories?.errors?.['required']) {
-                      <span>Number of calories is required</span>
-                    }
-                  </div>
+            />
+            <!--Error Message-->
+            @if (formName?.invalid && formName?.touched) {
+              <div class="error-message">
+                @if (formName?.errors?.['required']) {
+                  <span>Food name is required</span>
+                }
+                @if (formName?.errors?.['minlength']) {
+                  <span>Food name must be at least 2 characters</span>
                 }
               </div>
-              <!--Submit Button-->
-              <button type="submit" class="btn-submit" [disabled]="foodForm.invalid">
-                Add Food
-              </button>
-            </form>
-          </div>
-        }
-
-        <!--Food List-->
-        @if(foods.length>0){
-          <div class="food-list">
-            <p>Tap Each Food for Date</p>
-            @for(food of foods;track food.id){
-              <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                  <mat-panel-title> {{food.name}} </mat-panel-title>
-                  <mat-panel-description>{{food.calories}}</mat-panel-description>
-                </mat-expansion-panel-header>
-                <p>{{ currentDate }}</p>
-              </mat-expansion-panel>
             }
           </div>
-        }
-
-        <!--Food Chart-->
-        @if(foods.length>0){
-          <app-food-chart></app-food-chart>
-        }
-        <!--Empty State-->
-        @if (foods.length===0 && !showAddForm) {
-          <div class="empty-state">
-            <div class="empty-icon">🍱</div>
-            <p>No foods yet. Start tracking your eating habits today!</p>
-            <button class="btn-primary" (click)="toggleAddForm()">
-              Add Your First Food
-            </button>
+          <!--Calories Form Group-->
+          <div class="form-group">
+            <label for="calories">Number of Calories</label>
+            <input
+              type="number"
+              id="calories"
+              formControlName="calories"
+              placeholder="e.g., 95"
+              class="form-control"
+            />
+            <!--Error Message-->
+            @if (formCalories?.invalid && formCalories?.touched) {
+              <div class="error-message">
+                @if (formCalories?.errors?.['required']) {
+                  <span>Number of calories is required</span>
+                }
+              </div>
+            }
           </div>
-        }
+          <!--Submit Button-->
+          <button type="submit" class="btn-submit" [disabled]="foodForm.invalid">
+            Add Food
+          </button>
+        </form>
+      </div>
+    }
+    <!--Food Chart-->
+    @if(foods.length>0){
+      <div class="food-chart">
+        <app-food-chart [dailyFood]="foods"></app-food-chart>
+      </div> 
+    }
   </section>
+
+  <!--Food List-->
+  @if(foods.length>0){
+    <div class="food-list">
+      <h1>Weekly Food</h1>
+      @for(food of foods;track food.id){
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title> 
+              {{food.name}}
+            </mat-panel-title>
+            <mat-panel-description class="panel-actions">
+              {{food.calories}}
+              <!--Delete Button-->
+              <button class="emoji-button" (click)="deleteFood(food.id)">
+                🗑️
+              </button>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>{{ currentDate }}</p>
+        </mat-expansion-panel>
+      }
+    </div>
+  }
+
+  <!--Empty State-->
+  @if (foods.length===0 && !showAddForm) {
+    <div class="empty-state">
+      <div class="empty-icon">🍱</div>
+      <p>No foods yet. Start tracking your eating habits today!</p>
+      <button class="btn-primary" (click)="toggleAddForm()">
+        Add Your First Food
+      </button>
+    </div>
+  }
 </div>
