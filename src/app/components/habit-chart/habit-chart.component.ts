@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import { HabitService } from '../../services/habit.service';
 import { HabitStats } from '../../models/habit.model';
@@ -9,7 +9,7 @@ Chart.register(...registerables);
 
 @Component({
     selector: 'app-habit-chart',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './habit-chart.component.html',
     styleUrl: './habit-chart.component.scss'
 })

@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FoodService } from '../../services/food.service';
 import { Food } from '../../models/food.model';
-import { NgChartsModule } from 'ng2-charts'; 
-import { ChartData, ChartOptions } from 'chart.js'; 
 
 @Component({
     selector: 'app-food',
-    imports: [CommonModule, ReactiveFormsModule, NgChartsModule],
+    imports: [ReactiveFormsModule],
     templateUrl: './food.component.html',
     styleUrls: ['./food.component.scss']
 })

@@ -1,9 +1,11 @@
 <div class="habit-chart">
   <div class="chart-header">
     <span class="chart-title">Last 7 Days</span>
-    <span class="completion-rate" *ngIf="habitStats">
-      {{ habitStats.completionRate }}% Complete
-    </span>
+    @if (habitStats) {
+      <span class="completion-rate">
+        {{ habitStats.completionRate }}% Complete
+      </span>
+    }
   </div>
   <div class="chart-container">
     <canvas #chartCanvas></canvas>

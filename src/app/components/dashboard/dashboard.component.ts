@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { HabitTrackerComponent } from '../habit-tracker/habit-tracker.component';
 import { FoodComponent } from '../food/food.component';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [CommonModule, HabitTrackerComponent, FoodComponent],
+    imports: [HabitTrackerComponent, FoodComponent],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss'
 })

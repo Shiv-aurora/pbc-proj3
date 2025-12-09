@@ -1,65 +1,79 @@
 <div class="food-container">
-    <!--Food Header-->
-    <div class="food-header">
-        <h1>Food Tracker</h1>
-    </div>
+  <!--Food Header-->
+  <div class="food-header">
+    <h1>Food Tracker</h1>
+  </div>
 
-    <section class="food-section">
-        <!--Add Food Button -->
-        <div class="add-food-header">
-            <button class="btn-add-food" (click)="toggleAddForm()">
-                {{ showAddForm ? 'X Cancel' : '+ Add New Food' }}
-            </button>
-        </div>
-        <!--Add Food Form -->
-        <div class="add-food-form" *ngIf="showAddForm">
-            <form [formGroup]="foodForm" (ngSubmit)="onSubmit()">
-                <!--Food Form Group-->
-                <div class="form-group">
-                    <label for="name">Food</label>
-                    <input
-                        type="name"
-                        id="name"
-                        formControlName="name"
-                        placeholder="e.g., Apples"
-                        class="form-control"
-                        [class.error]="formName?.invalid && formName?.touched"
-                    />
-                    <!--Error Message-->
-                    <div class="error-message" *ngIf="formName?.invalid && formName?.touched">
-                        <span *ngIf="formName?.errors?.['required']">Food name is required</span>
-                        <span *ngIf="formName?.errors?.['minlength']">Food name must be at least 2 characters</span>
-                    </div>
+  <section class="food-section">
+    <!--Add Food Button -->
+    <div class="add-food-header">
+      <button class="btn-add-food" (click)="toggleAddForm()">
+        {{ showAddForm ? 'X Cancel' : '+ Add New Food' }}
+      </button>
+    </div>
+    <!--Add Food Form -->
+    @if (showAddForm) {
+      <div class="add-food-form">
+        <form [formGroup]="foodForm" (ngSubmit)="onSubmit()">
+          <!--Food Form Group-->
+          <div class="form-group">
+            <label for="name">Food</label>
+            <input
+              type="name"
+              id="name"
+              formControlName="name"
+              placeholder="e.g., Apples"
+              class="form-control"
+              [class.error]="formName?.invalid && formName?.touched"
+              />
+              <!--Error Message-->
+              @if (formName?.invalid && formName?.touched) {
+                <div class="error-message">
+                  @if (formName?.errors?.['required']) {
+                    <span>Food name is required</span>
+                  }
+                  @if (formName?.errors?.['minlength']) {
+                    <span>Food name must be at least 2 characters</span>
+                  }
                 </div>
-                <!--Calories Form Group-->
-                <div class="form-group">
-                    <label for="calories">Number of Calories</label>
-                    <input
-                        type="number"
-                        id="calories"
-                        formControlName="calories"
-                        placeholder="e.g., 95"
-                        class="form-control"
-                    />
-                    <!--Error Message-->
-                    <div class="error-message" *ngIf="formCalories?.invalid && formCalories?.touched">
-                        <span *ngIf="formCalories?.errors?.['required']">Number of calories is required</span>
-                    </div>
-                </div>
-                <!--Submit Button-->
-                <button type="submit" class="btn-submit" [disabled]="foodForm.invalid">
-                    Add Food
-                </button> 
+              }
+            </div>
+            <!--Calories Form Group-->
+            <div class="form-group">
+              <label for="calories">Number of Calories</label>
+              <input
+                type="number"
+                id="calories"
+                formControlName="calories"
+                placeholder="e.g., 95"
+                class="form-control"
+                />
+                <!--Error Message-->
+                @if (formCalories?.invalid && formCalories?.touched) {
+                  <div class="error-message">
+                    @if (formCalories?.errors?.['required']) {
+                      <span>Number of calories is required</span>
+                    }
+                  </div>
+                }
+              </div>
+              <!--Submit Button-->
+              <button type="submit" class="btn-submit" [disabled]="foodForm.invalid">
+                Add Food
+              </button>
             </form>
-        </div>
+          </div>
+        }
 
         <!--Empty State-->
-        <div class="empty-state" *ngIf="foods.length===0 && !showAddForm">
+        @if (foods.length===0 && !showAddForm) {
+          <div class="empty-state">
             <div class="empty-icon">🍱</div>
             <p>No foods yet. Start tracking your eating habits today!</p>
             <button class="btn-primary" (click)="toggleAddForm()">
-                Add Your First Food
+              Add Your First Food
             </button>
-        </div>
-    </section>
-</div>
+          </div>
+        }
+      </section>
+    </div>

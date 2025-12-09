@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HabitService } from '../../services/habit.service';
 import { Habit } from '../../models/habit.model';
@@ -7,7 +7,7 @@ import { HabitChartComponent } from '../habit-chart/habit-chart.component';
 
 @Component({
     selector: 'app-habit-tracker',
-    imports: [CommonModule, ReactiveFormsModule, HabitChartComponent],
+    imports: [ReactiveFormsModule, HabitChartComponent],
     templateUrl: './habit-tracker.component.html',
     styleUrl: './habit-tracker.component.scss'
 })
