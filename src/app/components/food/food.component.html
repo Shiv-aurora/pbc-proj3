@@ -70,6 +70,17 @@
         <app-food-chart [dailyFood]="foods"></app-food-chart>
       </div> 
     }
+
+    <!--Empty State-->
+    @if (foods.length===0 && !showAddForm) {
+      <div class="empty-state">
+        <div class="empty-icon">🍱</div>
+        <p>No foods yet. Start tracking your eating habits today!</p>
+        <button class="btn-primary" (click)="toggleAddForm()">
+          Add Your First Food
+        </button>
+      </div>
+    }
   </section>
 
   <!--Food List-->
@@ -83,7 +94,7 @@
               {{food.name}}
             </mat-panel-title>
             <mat-panel-description class="panel-actions">
-              {{food.calories}}
+              {{food.calories}} calories
               <!--Delete Button-->
               <button class="emoji-button" (click)="deleteFood(food.id)">
                 🗑️
@@ -93,17 +104,6 @@
           <p>{{ currentDate }}</p>
         </mat-expansion-panel>
       }
-    </div>
-  }
-
-  <!--Empty State-->
-  @if (foods.length===0 && !showAddForm) {
-    <div class="empty-state">
-      <div class="empty-icon">🍱</div>
-      <p>No foods yet. Start tracking your eating habits today!</p>
-      <button class="btn-primary" (click)="toggleAddForm()">
-        Add Your First Food
-      </button>
     </div>
   }
 </div>

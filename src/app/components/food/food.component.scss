@@ -8,7 +8,6 @@
 .food-header{
   text-align: center;
   margin-bottom: 3rem;
-
   h1 {
     font-family: 'Playfair Display', serif;
     color: var(--color-brown);
@@ -125,13 +124,13 @@
 }
 
 .food-list{
-  margin-top: 2rem;
   h1 {
     font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
     color: var(--color-brown);
-    font-size: 2.25rem;
-    margin-bottom: 2rem;
-    font-weight: 700;
+    letter-spacing: -1px;
   }
 }
 
@@ -189,10 +188,6 @@
   line-height:1;
 }
 
-.emoji-button:hover{
-  color:red;
-}
-
 .form-chart-container{
   display:flex;
   gap:2rem;
@@ -215,7 +210,8 @@
   }
 
   .food-section{
-    padding: 1.5rem; 
+    padding: 1.5rem;
+    flex-direction:column; 
   }
 
   .add-food-form{
