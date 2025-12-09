@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FoodComponent } from './components/food/food.component';
+import { MoodComponent } from './components/mood/mood.component';
+import { HabitComponent } from './habit/habit.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

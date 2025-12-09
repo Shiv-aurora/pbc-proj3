@@ -1,39 +1,55 @@
-.food{
-  background:var(--color-white);
+.food-container{
+  max-width:1400px;
+  margin:0 auto; 
+  padding:3rem 2rem; 
+  min-height: calc(100vh - 80px); 
+}
+
+.food-header{
+  text-align: center;
+  margin-bottom: 3rem;
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--color-brown);
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+  }
+}
+
+.food-section{
+  background: var(--color-white);
   border: 2px solid var(--color-beige);
   border-radius: 12px;
   padding: 2.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
+  margin-bottom:3rem;
 
-.add-food-header {
-  margin-bottom: 2rem;
+  .btn-add-food {
+  background: var(--color-brown);
+  color: var(--color-white);
+  border: 2px solid var(--color-brown);
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
 
-  .btn-add-habit {
-    background: var(--color-brown);
-    color: var(--color-white);
-    border: 2px solid var(--color-brown);
-    padding: 0.8rem 1.75rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Inter', sans-serif;
+  &:hover {
+    background: var(--color-brown-light);
+    border-color: var(--color-brown-light);
+    transform: translateY(-1px);
+  }
 
-    &:hover {
-      background: var(--color-brown-light);
-      border-color: var(--color-brown-light);
-      transform: translateY(-1px);
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
+  &:active {
+    transform: translateY(0);
   }
 }
 
-.add-habit-form {
+.add-food-form {
   background: var(--color-off-white);
   border-radius: 12px;
   padding: 2rem;
@@ -143,13 +159,19 @@
     }
   }
 }
+}
 
 @media (max-width: 768px) {
-  .habit-tracker {
-    padding: 1.5rem;
+  .food-container{
+    padding:2rem 1rem;
   }
 
-  .add-habit-form {
-    padding: 1.5rem;
+  .food-section{
+    padding: 1.5rem; 
+  }
+
+  .add-food-form{
+    padding:1.5rem;
   }
 }
+

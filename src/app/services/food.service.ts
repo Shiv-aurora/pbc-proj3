@@ -69,7 +69,7 @@ export class FoodService {
 
   //Update existing food
   updateFood(id:string,updates:Partial<Food>):void{
-    const foods=this.foodsSubject.value.map(f=>f.id===id?{...f,...updates}:f)
+    const foods=this.foodsSubject.value.map(f=>f.id===id?{...f,...updates}:f);
     this.foodsSubject.next(foods);
     this.saveFoodsToStorage(foods); 
   };

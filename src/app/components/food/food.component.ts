@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FoodService } from '../../services/food.service';
 import { Food } from '../../models/food.model';
+import { NgChartsModule } from 'ng2-charts'; 
+import { ChartData, ChartOptions } from 'chart.js'; 
 
 @Component({
   selector: 'app-food',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule,NgChartsModule],
   templateUrl: './food.component.html',
   styleUrls: ['./food.component.scss']
 })
@@ -47,6 +49,6 @@ export class FoodComponent {
   }
 
   get formName(){
-    return this.foodForm.get('foodName');
+    return this.foodForm.get('food');
   }
 }
