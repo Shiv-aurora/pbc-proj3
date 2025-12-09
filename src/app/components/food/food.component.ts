@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FoodService } from '../../services/food.service';
 import { Food } from '../../models/food.model';
+import { FoodChart } from '../food-chart/food-chart';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
     selector: 'app-food',
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule,MatExpansionModule,FoodChart],
     templateUrl: './food.component.html',
     styleUrls: ['./food.component.scss']
 })
-export class FoodComponent {
+export class FoodComponent implements OnInit{
+  currentDate:string='';
   foods: Food[]=[];
   foodForm: FormGroup;
   showAddForm=false; 
@@ -29,6 +31,21 @@ export class FoodComponent {
     return this.foodForm.get('calories'); 
   }
 
+  ngOnInit(){
+    this.setCurrentDate();
+  }
+
+  private setCurrentDate():void{
+    const date=new Date();
+    const options:Intl.DateTimeFormatOptions={
+      weekday:'long',
+      year:'numeric',
+      month:'long',
+      day:'numeric'
+    };
+    this.currentDate=date.toLocaleDateString('en-US',options);
+  }
+
   toggleAddForm():void{
     this.showAddForm=!this.showAddForm; 
     if(!this.showAddForm){
@@ -38,10 +55,8 @@ export class FoodComponent {
 
   onSubmit():void{
     if(this.foodForm.valid){
-      const{name, calories}=this.foodForm.value;
-      this.foodService.addFood(name,calories||undefined);
+      this.foods.push(this.foodForm.value);
       this.foodForm.reset();
-      this.showAddForm=false;
     }
   }
 

@@ -65,6 +65,26 @@
           </div>
         }
 
+        <!--Food List-->
+        @if(foods.length>0){
+          <div class="food-list">
+            <p>Tap Each Food for Date</p>
+            @for(food of foods;track food.id){
+              <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> {{food.name}} </mat-panel-title>
+                  <mat-panel-description>{{food.calories}}</mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>{{ currentDate }}</p>
+              </mat-expansion-panel>
+            }
+          </div>
+        }
+
+        <!--Food Chart-->
+        @if(foods.length>0){
+          <app-food-chart></app-food-chart>
+        }
         <!--Empty State-->
         @if (foods.length===0 && !showAddForm) {
           <div class="empty-state">
@@ -75,5 +95,5 @@
             </button>
           </div>
         }
-      </section>
-    </div>
+  </section>
+</div>
