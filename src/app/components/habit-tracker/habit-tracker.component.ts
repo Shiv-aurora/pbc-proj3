@@ -6,11 +6,10 @@ import { Habit } from '../../models/habit.model';
 import { HabitChartComponent } from '../habit-chart/habit-chart.component';
 
 @Component({
-  selector: 'app-habit-tracker',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HabitChartComponent],
-  templateUrl: './habit-tracker.component.html',
-  styleUrl: './habit-tracker.component.scss'
+    selector: 'app-habit-tracker',
+    imports: [CommonModule, ReactiveFormsModule, HabitChartComponent],
+    templateUrl: './habit-tracker.component.html',
+    styleUrl: './habit-tracker.component.scss'
 })
 export class HabitTrackerComponent implements OnInit {
   habits: Habit[] = [];

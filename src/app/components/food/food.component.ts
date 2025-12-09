@@ -7,11 +7,10 @@ import { NgChartsModule } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js'; 
 
 @Component({
-  selector: 'app-food',
-  standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,NgChartsModule],
-  templateUrl: './food.component.html',
-  styleUrls: ['./food.component.scss']
+    selector: 'app-food',
+    imports: [CommonModule, ReactiveFormsModule, NgChartsModule],
+    templateUrl: './food.component.html',
+    styleUrls: ['./food.component.scss']
 })
 export class FoodComponent {
   foods: Food[]=[];

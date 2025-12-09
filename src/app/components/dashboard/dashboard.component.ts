@@ -4,11 +4,10 @@ import { HabitTrackerComponent } from '../habit-tracker/habit-tracker.component'
 import { FoodComponent } from '../food/food.component';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [CommonModule, HabitTrackerComponent, FoodComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+    selector: 'app-dashboard',
+    imports: [CommonModule, HabitTrackerComponent, FoodComponent],
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
   currentDate: string = '';

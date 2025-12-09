@@ -8,11 +8,10 @@ import { HabitStats } from '../../models/habit.model';
 Chart.register(...registerables);
 
 @Component({
-  selector: 'app-habit-chart',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './habit-chart.component.html',
-  styleUrl: './habit-chart.component.scss'
+    selector: 'app-habit-chart',
+    imports: [CommonModule],
+    templateUrl: './habit-chart.component.html',
+    styleUrl: './habit-chart.component.scss'
 })
 export class HabitChartComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() habitId!: string;

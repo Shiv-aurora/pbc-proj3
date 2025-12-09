@@ -10,11 +10,10 @@ interface MoodEntry {
 }
 
 @Component({
-  selector: 'app-mood',                       // <app-mood></app-mood>
-  standalone: true,
-  imports: [CommonModule],                    // for *ngIf, *ngFor in the template
-  templateUrl: './mood.component.html',
-  styleUrls: ['./mood.component.scss']
+    selector: 'app-mood',
+    imports: [CommonModule], // for *ngIf, *ngFor in the template
+    templateUrl: './mood.component.html',
+    styleUrls: ['./mood.component.scss']
 })
 export class MoodComponent implements OnInit {
 
