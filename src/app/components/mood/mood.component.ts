@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-//import * as Papa from 'papaparse';
 
 interface MoodEntry {
   date: string;
@@ -11,6 +10,7 @@ interface MoodEntry {
 
 @Component({
     selector: 'app-mood',
+    standalone: true,
     imports: [CommonModule], // for *ngIf, *ngFor in the template
     templateUrl: './mood.component.html',
     styleUrls: ['./mood.component.scss']
@@ -19,6 +19,7 @@ export class MoodComponent implements OnInit {
 
   moodData: MoodEntry[] = [];
   loading = true;
+  error: string | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -27,21 +28,13 @@ export class MoodComponent implements OnInit {
   }
 
   private loadMoodData(): void {
-    this.http.get('assets/daylio/daylio_mood.csv', { responseType: 'text' })
+    this.http.get('assets/data/daylio_clean.json', { responseType: 'text' })
       .subscribe({
         next: (csv: string) => {
-          /*Papa.parse<MoodEntry>(csv, {
-            header: true,
-            skipEmptyLines: true,
-            complete: (results: Papa.ParseResult<MoodEntry>) => {
-              this.moodData = results.data;
-              this.loading = false;
-              console.log('Parsed data:', this.moodData);
-            }
-          });*/
         },
         error: (err) => {
           console.error('Error loading CSV:', err);
+          this.error = 'Error loading dataset';
           this.loading = false;
         }
       });

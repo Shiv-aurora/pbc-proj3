@@ -1,27 +1,12 @@
 <div class="mood-container">
-  <header class="mood-header">
-    <h1>Mood Tracker</h1>
-    @if (loading) {
-      <p>Loading mood data…</p>
-    }
+  <h1>Mood Tracker</h1>
 
-    @if (!loading && moodData.length) {
-      <div>
-        <h3>Recent Daylio Entries</h3>
-        <ul>
-          @for (entry of moodData | slice:0:10; track entry) {
-            <li>
-              <strong>{{ entry.date }}</strong> — {{ entry.mood }}
-            </li>
-          }
-        </ul>
-      </div>
-    }
+  <p *ngIf="loading">Loading mood data…</p>
+  <p *ngIf="error">{{ error }}</p>
 
-    @if (!loading && !moodData.length) {
-      <p>
-        No mood entries found.
-      </p>
-    }
-  </header>
+  <ul *ngIf="!loading && !error">
+    <li *ngFor="let entry of moodData | slice:0:10">
+      <strong>{{ entry.date }}</strong> – {{ entry.mood }}
+    </li>
+  </ul>
 </div>
