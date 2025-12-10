@@ -1,28 +1,157 @@
-<div class="dashboard-container">
-  <!-- Header Section -->
+<div class="dashboard">
+  <!-- Header -->
   <header class="dashboard-header">
-    <h1>Wellness Dashboard</h1>
-    <p class="current-date">{{ currentDate }}</p>
+    <div class="header-left">
+      <h1>{{ greeting }}</h1>
+      <p class="date">{{ currentDate }}</p>
+    </div>
+    <div class="quote-inline">
+      <span class="quote-text">"{{ motivationalQuote }}"</span>
+      <span class="quote-author">— {{ quoteAuthor }}</span>
+    </div>
   </header>
 
-  <!-- Motivational Quote Section -->
-  <section class="quote-section">
-    <div class="quote-card">
-      <div class="quote-icon">💪</div>
-      <blockquote class="quote-text">"{{ motivationalQuote }}"</blockquote>
-      <p class="quote-author">— {{ quoteAuthor }}</p>
+  <!-- Stats Overview -->
+  <section class="stats-row">
+    <div class="stat-card">
+      <div class="stat-icon habits-icon">
+        <span>◉</span>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ completedHabitsToday }}/{{ totalHabits }}</span>
+        <span class="stat-label">Habits Today</span>
+      </div>
+      <div class="stat-progress">
+        <svg viewBox="0 0 36 36" class="circular-progress">
+          <path class="bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+          <path class="fg habits-fg" [style.stroke-dasharray]="getHabitPercentage() + ', 100'" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon goals-icon">
+        <span>◎</span>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalGoals }}</span>
+        <span class="stat-label">Active Goals</span>
+      </div>
+      <div class="stat-badge" *ngIf="completedGoalsCount > 0">
+        {{ completedGoalsCount }} done
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon calories-icon">
+        <span>◈</span>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalCalories }}</span>
+        <span class="stat-label">Calories Today</span>
+      </div>
+      <div class="stat-progress">
+        <svg viewBox="0 0 36 36" class="circular-progress">
+          <path class="bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+          <path class="fg calories-fg" [style.stroke-dasharray]="getCaloriePercentage() + ', 100'" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+        </svg>
+      </div>
     </div>
   </section>
 
-  <!-- AI Activity Recommender Section -->
-  <section class="recommender-section">
-    <h2>🤖 AI-Powered Recommendations</h2>
-    <app-activity-recommender></app-activity-recommender>
-  </section>
+  <!-- Main Content Grid -->
+  <div class="content-grid">
+    <!-- Left Column: Habits -->
+    <section class="habits-section">
+      <div class="section-header">
+        <h2>Daily Habits</h2>
+        <a routerLink="/habits" class="view-all">View all</a>
+      </div>
+      <app-habit-tracker></app-habit-tracker>
+    </section>
 
-  <!-- Habit Tracker Section -->
-  <section class="habit-section">
-    <h2>Daily Habits</h2>
-    <app-habit-tracker></app-habit-tracker>
-  </section>
+    <!-- Right Column: Goals & Food -->
+    <div class="right-column">
+      <!-- Goals Widget -->
+      <section class="goals-widget">
+        <div class="section-header">
+          <h2>Goals</h2>
+          <a routerLink="/goals" class="view-all">View all</a>
+        </div>
+        
+        <div class="widget-content">
+          @if (activeGoals.length === 0) {
+            <div class="empty-widget">
+              <p>No active goals yet</p>
+              <a routerLink="/goals" class="add-link">+ Add a goal</a>
+            </div>
+          } @else {
+            <div class="goals-list">
+              @for (goal of activeGoals; track goal.id) {
+                <div class="goal-item">
+                  <div class="goal-icon" [style.background-color]="getGoalCategoryColor(goal)">
+                    {{ getGoalCategoryIcon(goal) }}
+                  </div>
+                  <div class="goal-info">
+                    <span class="goal-title">{{ goal.title }}</span>
+                    <div class="goal-progress-bar">
+                      <div class="goal-progress-fill" 
+                           [style.width.%]="getGoalProgress(goal)"
+                           [style.background-color]="getGoalCategoryColor(goal)">
+                      </div>
+                    </div>
+                  </div>
+                  <span class="goal-percent">{{ getGoalProgress(goal) }}%</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- Food Widget -->
+      <section class="food-widget">
+        <div class="section-header">
+          <h2>Today's Food</h2>
+          <a routerLink="/food" class="view-all">Log food</a>
+        </div>
+        
+        <div class="widget-content">
+          <div class="calorie-summary">
+            <div class="calorie-circle">
+              <svg viewBox="0 0 36 36" class="calorie-progress">
+                <path class="bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path class="fg" [style.stroke-dasharray]="getCaloriePercentage() + ', 100'" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              </svg>
+              <div class="calorie-text">
+                <span class="cal-value">{{ totalCalories }}</span>
+                <span class="cal-label">kcal</span>
+              </div>
+            </div>
+            <div class="calorie-info">
+              <span class="cal-goal">Goal: {{ calorieGoal }} kcal</span>
+              <span class="cal-remaining" [class.over]="totalCalories > calorieGoal">
+                {{ totalCalories > calorieGoal ? (totalCalories - calorieGoal) + ' over' : (calorieGoal - totalCalories) + ' remaining' }}
+              </span>
+            </div>
+          </div>
+
+          @if (foods.length > 0) {
+            <div class="food-list">
+              @for (food of foods; track food.id) {
+                <div class="food-item">
+                  <span class="food-name">{{ food.name }}</span>
+                  <span class="food-cal">{{ food.calories }} kcal</span>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="empty-food">
+              <p>No food logged today</p>
+            </div>
+          }
+        </div>
+      </section>
+    </div>
+  </div>
 </div>
