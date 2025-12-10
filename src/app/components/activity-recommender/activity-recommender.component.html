@@ -1,0 +1,89 @@
+<div class="recommender-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Analyzing your patterns...</p>
+  </div>
+
+  <!-- Daily Recommendation Card -->
+  <div *ngIf="!isLoading && dailyRecommendation" class="daily-recommendation">
+    <div class="recommendation-header">
+      <span class="sparkle">✨</span>
+      <h3>Today's Wellness Tip</h3>
+    </div>
+    
+    <div class="recommendation-content">
+      <div class="activity-icon">{{ dailyRecommendation.icon }}</div>
+      <div class="activity-details">
+        <h4>Try: {{ dailyRecommendation.activity }}</h4>
+        <p>{{ dailyRecommendation.reason }}</p>
+        <div class="confidence-bar">
+          <div class="confidence-fill" 
+               [style.width.%]="dailyRecommendation.positivePercentage"
+               [style.background-color]="getBarColor(dailyRecommendation.positivePercentage)">
+          </div>
+        </div>
+        <span class="confidence-label">{{ dailyRecommendation.positivePercentage }}% positive mood correlation</span>
+      </div>
+    </div>
+
+    <button class="insights-toggle" (click)="toggleInsights()">
+      {{ showInsights ? 'Hide Insights ▲' : 'See All Insights ▼' }}
+    </button>
+  </div>
+
+  <!-- Expanded Insights Section -->
+  <div *ngIf="showInsights && !isLoading" class="insights-section">
+    
+    <!-- Mood Boosters -->
+    <div class="insights-card boosters">
+      <h4>🌟 Top Mood Boosters</h4>
+      <p class="insights-subtitle">Activities most correlated with positive moods</p>
+      
+      <div class="activity-list">
+        <div *ngFor="let activity of topActivities; let i = index" class="activity-row">
+          <span class="rank">{{ i + 1 }}</span>
+          <span class="icon">{{ getActivityIcon(activity.activity) }}</span>
+          <span class="name">{{ activity.activity }}</span>
+          <div class="bar-container">
+            <div class="bar" 
+                 [style.width.%]="getBarWidth(activity.positivePercentage)"
+                 [style.background-color]="getBarColor(activity.positivePercentage)">
+            </div>
+          </div>
+          <span class="percentage">{{ activity.positivePercentage }}%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activities to Moderate -->
+    <div class="insights-card caution">
+      <h4>⚠️ Use in Moderation</h4>
+      <p class="insights-subtitle">Activities with lower positive mood correlation</p>
+      
+      <div class="activity-list">
+        <div *ngFor="let activity of activitiesToAvoid" class="activity-row">
+          <span class="icon">{{ getActivityIcon(activity.activity) }}</span>
+          <span class="name">{{ activity.activity }}</span>
+          <div class="bar-container">
+            <div class="bar" 
+                 [style.width.%]="getBarWidth(activity.positivePercentage)"
+                 [style.background-color]="getBarColor(activity.positivePercentage)">
+            </div>
+          </div>
+          <span class="percentage">{{ activity.positivePercentage }}%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="how-it-works">
+      <p>
+        <strong>🤖 How this works:</strong> We analyzed 940+ mood entries and their associated 
+        activities to find patterns. Activities shown here have the strongest correlation 
+        with positive or negative moods.
+      </p>
+    </div>
+  </div>
+</div>
+
