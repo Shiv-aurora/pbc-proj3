@@ -63,3 +63,4 @@ logs/
 # Testing
 coverage/
 *.lcov
+.vercel
