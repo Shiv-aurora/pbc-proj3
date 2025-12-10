@@ -1,14 +1,101 @@
 <div class="mood-container">
-  <h1>Mood Tracker</h1>
-
-  <p *ngIf="loading">Loading mood data…</p>
-  <p *ngIf="error">{{ error }}</p>
-
-    @if (!loading && !moodData.length) {
-      <p>
-        No mood entries found.
-      </p>
-    }
+  <header class="mood-header">
+    <h1>Mood Tracker</h1>
+    <p class="subtitle">Track your emotional journey</p>
   </header>
-</div>
 
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading mood data…</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="error-state">
+    <span class="error-icon">⚠️</span>
+    <p>{{ error }}</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !error && !moodData.length" class="empty-state">
+    <span class="empty-icon">📝</span>
+    <p>No mood entries found.</p>
+  </div>
+
+  <!-- Mood Content -->
+  <div *ngIf="!loading && !error && moodData.length" class="mood-content">
+    
+    <!-- Stats Overview -->
+    <section class="stats-section">
+      <h2>Mood Overview</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">{{ moodData.length }}</span>
+          <span class="stat-label">Total Entries</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">{{ (moodCounts | keyvalue).length }}</span>
+          <span class="stat-label">Different Moods</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mood Distribution -->
+    <section class="mood-distribution">
+      <h2>Mood Distribution</h2>
+      <div class="mood-chips">
+        <div *ngFor="let mood of moodCounts | keyvalue" 
+             class="mood-chip"
+             [style.background-color]="getMoodColor(mood.key)">
+          <span class="mood-emoji">{{ getMoodEmoji(mood.key) }}</span>
+          <span class="mood-name">{{ mood.key }}</span>
+          <span class="mood-count">{{ mood.value }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top Activities -->
+    <section class="activities-section">
+      <h2>Top Activities</h2>
+      <div class="activities-list">
+        <div *ngFor="let activity of topActivities; let i = index" class="activity-item">
+          <span class="activity-rank">{{ i + 1 }}</span>
+          <span class="activity-name">{{ activity.name }}</span>
+          <div class="activity-bar-container">
+            <div class="activity-bar" 
+                 [style.width.%]="(activity.count / topActivities[0].count) * 100">
+            </div>
+          </div>
+          <span class="activity-count">{{ activity.count }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Entries -->
+    <section class="entries-section">
+      <h2>Recent Entries</h2>
+      <div class="entries-list">
+        <div *ngFor="let entry of moodData.slice(0, 20)" class="entry-card">
+          <div class="entry-mood" [style.background-color]="getMoodColor(entry.mood)">
+            <span class="entry-emoji">{{ getMoodEmoji(entry.mood) }}</span>
+          </div>
+          <div class="entry-details">
+            <div class="entry-header">
+              <span class="entry-mood-name">{{ entry.mood }}</span>
+              <span class="entry-date">{{ entry.weekday }}, {{ entry.date }}</span>
+            </div>
+            <div class="entry-time">{{ entry.time }}</div>
+            <div *ngIf="entry.activities?.length" class="entry-activities">
+              <span *ngFor="let activity of entry.activities.slice(0, 5)" class="activity-tag">
+                {{ activity }}
+              </span>
+              <span *ngIf="entry.activities.length > 5" class="more-activities">
+                +{{ entry.activities.length - 5 }} more
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
