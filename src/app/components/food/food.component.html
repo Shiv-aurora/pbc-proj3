@@ -83,10 +83,14 @@
     }
   </section>
 
+  <!--List Header-->
+  <div class="list-header">
+    <h1>Weekly Food:</h1>
+  </div>
+
   <!--Food List-->
   @if(foods.length>0){
     <div class="food-list">
-      <h1>Weekly Food</h1>
       @for(food of foods;track food.id){
         <mat-expansion-panel hideToggle>
           <mat-expansion-panel-header>

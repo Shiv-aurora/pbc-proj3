@@ -6,7 +6,6 @@ import { Food } from '../models/food.model';
   providedIn: 'root'
 })
 export class FoodService {
-  private readonly STORAGE_KEY='foods';
   private foodsSubject=new BehaviorSubject<Food[]>(this.loadFoods());
   public foods$=this.foodsSubject.asObservable();
 
@@ -21,7 +20,6 @@ export class FoodService {
       calories,
       createdAt:new Date()
     };
-
     const updated=[...this.foodsSubject.value,newFood];
     this.foodsSubject.next(updated);
     this.saveFoods(updated);
@@ -39,16 +37,12 @@ export class FoodService {
   }
 
   private loadFoods():Food[]{
-    try{
-      const data=localStorage.getItem(this.STORAGE_KEY);
-      return data?(JSON.parse(data) as Food[]):[];
-    }catch{
-      return[];
-    }
+    const data=localStorage.getItem('foods');
+    return data?JSON.parse(data):[];
   }
 
   private saveFoods(foods:Food[]):void{
-    localStorage.setItem(this.STORAGE_KEY,JSON.stringify(foods));
+    localStorage.setItem('foods',JSON.stringify(foods));
   }
 
   //Get single food by ID
