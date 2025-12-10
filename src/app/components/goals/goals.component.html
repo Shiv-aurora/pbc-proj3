@@ -1,0 +1,286 @@
+<div class="goals-container">
+  <header class="goals-header">
+    <div class="header-content">
+      <h1>My Goals</h1>
+      <p class="subtitle">Track your progress and achieve more</p>
+    </div>
+    <button class="btn-add" (click)="toggleAddForm()">
+      {{ showAddForm ? 'Cancel' : '+ New Goal' }}
+    </button>
+  </header>
+
+  <!-- Add Goal Form -->
+  @if (showAddForm) {
+    <div class="add-goal-card">
+      <h2>Create New Goal</h2>
+      
+      <!-- Category Selection -->
+      <div class="form-section">
+        <label>Category</label>
+        <div class="category-grid">
+          @for (cat of categories; track cat.id) {
+            <button 
+              type="button"
+              class="category-btn"
+              [class.selected]="newGoal.category === cat.id"
+              [style.--cat-color]="cat.color"
+              (click)="selectCategory(cat.id)">
+              <span class="cat-icon">{{ cat.icon }}</span>
+              <span class="cat-name">{{ cat.name }}</span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Goal Title -->
+      <div class="form-section">
+        <label for="goalTitle">What do you want to achieve?</label>
+        <input 
+          type="text" 
+          id="goalTitle"
+          [(ngModel)]="newGoal.title"
+          placeholder="e.g., Run a marathon, Read 20 books, Learn Spanish"
+          class="input-field"
+          maxlength="100"
+        />
+      </div>
+
+      <!-- Description (optional) -->
+      <div class="form-section">
+        <label for="goalDesc">Description <span class="optional">(optional)</span></label>
+        <textarea 
+          id="goalDesc"
+          [(ngModel)]="newGoal.description"
+          placeholder="Add more details about your goal..."
+          class="input-field textarea"
+          rows="2"
+        ></textarea>
+      </div>
+
+      <!-- Progress Type -->
+      <div class="form-section">
+        <label>How will you track progress?</label>
+        <div class="progress-type-grid">
+          <button 
+            type="button"
+            class="type-btn"
+            [class.selected]="newGoal.progressType === 'numeric'"
+            (click)="selectProgressType('numeric')">
+            <span class="type-icon">123</span>
+            <span class="type-label">Count</span>
+            <span class="type-desc">Track a number (books, miles, etc.)</span>
+          </button>
+          <button 
+            type="button"
+            class="type-btn"
+            [class.selected]="newGoal.progressType === 'percentage'"
+            (click)="selectProgressType('percentage')">
+            <span class="type-icon">%</span>
+            <span class="type-label">Percentage</span>
+            <span class="type-desc">Track 0-100% completion</span>
+          </button>
+          <button 
+            type="button"
+            class="type-btn"
+            [class.selected]="newGoal.progressType === 'boolean'"
+            (click)="selectProgressType('boolean')">
+            <span class="type-icon">✓</span>
+            <span class="type-label">Yes/No</span>
+            <span class="type-desc">Simple done or not done</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Target Value (for numeric) -->
+      @if (newGoal.progressType === 'numeric') {
+        <div class="form-row">
+          <div class="form-section flex-1">
+            <label for="targetValue">Target</label>
+            <input 
+              type="number" 
+              id="targetValue"
+              [(ngModel)]="newGoal.targetValue"
+              class="input-field"
+              min="1"
+            />
+          </div>
+          <div class="form-section flex-1">
+            <label for="unit">Unit <span class="optional">(optional)</span></label>
+            <input 
+              type="text" 
+              id="unit"
+              [(ngModel)]="newGoal.unit"
+              placeholder="books, miles, hours..."
+              class="input-field"
+            />
+          </div>
+        </div>
+      }
+
+      <!-- Target Date -->
+      <div class="form-section">
+        <label for="targetDate">Target Date</label>
+        <input 
+          type="date" 
+          id="targetDate"
+          [(ngModel)]="newGoal.targetDate"
+          class="input-field date-input"
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        class="btn-submit"
+        [disabled]="!newGoal.title.trim()"
+        (click)="submitGoal()">
+        Create Goal
+      </button>
+    </div>
+  }
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button 
+      class="tab"
+      [class.active]="activeTab === 'active'"
+      (click)="activeTab = 'active'">
+      Active <span class="count">{{ activeGoals.length }}</span>
+    </button>
+    <button 
+      class="tab"
+      [class.active]="activeTab === 'completed'"
+      (click)="activeTab = 'completed'">
+      Completed <span class="count">{{ completedGoals.length }}</span>
+    </button>
+  </div>
+
+  <!-- Goals List -->
+  <div class="goals-list">
+    @if (displayedGoals.length === 0) {
+      <div class="empty-state">
+        @if (activeTab === 'active') {
+          <div class="empty-icon">◎</div>
+          <h3>No active goals</h3>
+          <p>Set a goal to start tracking your progress</p>
+          <button class="btn-add-empty" (click)="toggleAddForm()">Create Your First Goal</button>
+        } @else {
+          <div class="empty-icon">☆</div>
+          <h3>No completed goals yet</h3>
+          <p>Complete your active goals to see them here</p>
+        }
+      </div>
+    }
+
+    @for (goal of displayedGoals; track goal.id) {
+      <div class="goal-card" [class.completed]="goal.status === 'completed'">
+        <div class="goal-header">
+          <div class="category-badge" [style.background-color]="getCategoryInfo(goal.category).color">
+            {{ getCategoryInfo(goal.category).icon }}
+          </div>
+          <div class="goal-info">
+            <h3 class="goal-title">{{ goal.title }}</h3>
+            <span class="goal-category">{{ getCategoryInfo(goal.category).name }}</span>
+          </div>
+          <div class="goal-actions">
+            @if (goal.status !== 'completed') {
+              <button class="action-btn" title="Update progress" (click)="openProgressModal(goal)">
+                <span>Update</span>
+              </button>
+            }
+            <button class="action-btn complete-btn" title="Mark complete" (click)="toggleComplete(goal)">
+              <span>{{ goal.status === 'completed' ? 'Undo' : 'Done' }}</span>
+            </button>
+            <button class="action-btn delete-btn" title="Delete" (click)="deleteGoal(goal)">×</button>
+          </div>
+        </div>
+
+        @if (goal.description) {
+          <p class="goal-description">{{ goal.description }}</p>
+        }
+
+        <!-- Progress Section -->
+        <div class="progress-section">
+          <div class="progress-header">
+            <span class="progress-text">
+              @if (goal.progressType === 'boolean') {
+                {{ goal.currentValue === 1 ? 'Completed' : 'Not completed' }}
+              } @else if (goal.progressType === 'percentage') {
+                {{ goal.currentValue }}% complete
+              } @else {
+                {{ goal.currentValue }} / {{ goal.targetValue }} {{ goal.unit }}
+              }
+            </span>
+            <span class="progress-percent">{{ getProgressPercentage(goal) }}%</span>
+          </div>
+          <div class="progress-bar-container">
+            <div 
+              class="progress-bar"
+              [style.width.%]="getProgressPercentage(goal)"
+              [style.background-color]="getCategoryInfo(goal.category).color">
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="goal-footer">
+          <span class="target-date">Target: {{ formatDate(goal.targetDate) }}</span>
+          <span 
+            class="status-badge"
+            [class]="getGoalStatus(goal)">
+            {{ getStatusLabel(goal) }}
+          </span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Progress Update Modal -->
+  @if (showProgressModal && progressGoal) {
+    <div class="modal-overlay" (click)="closeProgressModal()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Update Progress</h3>
+        <p class="modal-goal-title">{{ progressGoal.title }}</p>
+
+        <div class="progress-input-section">
+          @if (progressGoal.progressType === 'boolean') {
+            <div class="boolean-toggle">
+              <button 
+                class="toggle-btn"
+                [class.active]="tempProgressValue === 0"
+                (click)="tempProgressValue = 0">
+                Not Done
+              </button>
+              <button 
+                class="toggle-btn"
+                [class.active]="tempProgressValue === 1"
+                (click)="tempProgressValue = 1">
+                Done
+              </button>
+            </div>
+          } @else {
+            <div class="numeric-input">
+              <button class="increment-btn" (click)="incrementProgress(-1)">−</button>
+              <input 
+                type="number" 
+                [(ngModel)]="tempProgressValue"
+                [max]="progressGoal.targetValue"
+                min="0"
+                class="progress-input"
+              />
+              <button class="increment-btn" (click)="incrementProgress(1)">+</button>
+            </div>
+            <span class="target-label">
+              of {{ progressGoal.targetValue }} {{ progressGoal.unit || (progressGoal.progressType === 'percentage' ? '%' : '') }}
+            </span>
+          }
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-cancel" (click)="closeProgressModal()">Cancel</button>
+          <button class="btn-save" (click)="updateProgress()">Save Progress</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
